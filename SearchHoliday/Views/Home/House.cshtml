@@ -1,0 +1,9 @@
+﻿@{
+    for (int k = 0; k < int.Parse(ViewData["Count"].ToString()); k++)
+    {
+        <div style="font-size: 40px;">@ViewData["Names[" + k + "]"]</div>
+        <div>@ViewData["Category[" + k + "]"]</div>
+        <div>@ViewData["Price[" + k + "]"]</div>
+        <img src="@ViewData["Images[" + k + "]"]" alt="" style="min-width: 250px; max-width: 400px; max-height: 400px; object-fit: cover;"/>
+    }
+}

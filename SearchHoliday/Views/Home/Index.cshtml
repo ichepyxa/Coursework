@@ -1,7 +1,24 @@
-﻿@model HelloModel
+﻿@*@{
+    ViewData["Title"] = "Отдых в Беларуси 2021";
+    @for (int k = 0; k < int.Parse(ViewData["Count"].ToString()); k++)
+    {
+        <div class="item">
+            <div style="font-size: 40px;">@ViewData["Names[" + k + "]"]</div>
+            <div>@ViewData["Category[" + k + "]"]</div>
+            <div>@ViewData["Price[" + k + "]"]</div>
+            <img src="@ViewData["Images[" + k + "]"]" alt="" style="min-width: 250px; max-width: 400px; max-height: 400px; object-fit: cover;" />
+        </div>
+    }
+}*@
+
 @{
-    ViewData["Title"] = "Home page";
+    @foreach(var item in Model.allHouses)
+    {
+        <div class="item">
+            <div style="font-size: 40px;">@item.name</div>
+            <div>@item.type</div>
+            <div>@item.price</div>
+            <img src="@item.image" alt="" style="min-width: 250px; max-width: 400px; max-height: 400px; object-fit: cover;" />
+        </div>
+    }
 }
-
-<span>@Model.Hello</span>
-

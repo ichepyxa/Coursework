@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace SearchHoliday.ViewsModels
 {
-    public class HousesListViewModel
+    public class RecomendedHousesListViewModel
     {
-        public IEnumerable<House> AllHouses { get; set; }
-        //public House GetHouseById { get; set; }
+        public IEnumerable<House> AllRecomendedHouses { get; set; }
     }
 }

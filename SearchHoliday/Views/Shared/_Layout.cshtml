@@ -8,39 +8,56 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
+
+    <!-- Navbar -->
     <header class="sticky-top">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-white bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom">
             <div class="container">
-                <a class="navbar-brand text-dark" href="/">SearchHoliday</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a href="/" class="navbar-brand">SearchHoliday</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="true">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="/">Home</a>
+                            <a href="/" class="nav-link">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="/home/house">Houses</a>
+                            <a href="/home/houses" class="nav-link">Места отдыха</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Тест</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Отзывы</a>
                         </li>
                     </ul>
+
+                    <div class="d-flex">
+                        <button class="btn btn-outline-primary">Регистрация</button>
+                        <button class="btn btn-primary ms-3">Войти</button>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main role="main" class="w-100 pb-3">
+
+    <!-- Main -->
+    <main class="main w-100 pb-3">
         <div class="container">
-            <div class="d-flex justify-content-between flex-wrap gy-2">
+            <div class="main-inner d-flex align-items-center justify-content-between flex-wrap g-3">
                 @RenderBody()
             </div>
         </div>
     </main>
 
-    <footer class="border-top footer text-muted">
+
+    <!-- Footer -->
+    <footer class="footer border-top py-3">
         <div class="container">
-            &copy; 2021 - SearchHoliday - <a href="/">Privacy</a>
+            &copy; 2021 - SearchHoliday - Все материалы взяты с сайта <a href="https://www.holiday.by/by" target="_blank">Holiday.by</a>
         </div>
     </footer>
 

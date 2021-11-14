@@ -19,24 +19,30 @@ namespace SearchHoliday.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IAllRecomendedHouses _allRecomendedHouses;
         private readonly IAllHouses _allHouses;
 
-        public HomeController(IAllHouses allHouses)
+        public HomeController(IAllRecomendedHouses allRecomendedHouses, IAllHouses allHouses)
         {
+            _allRecomendedHouses = allRecomendedHouses;
             _allHouses = allHouses;
         }
 
         public ActionResult Index()
         {
-            HousesListViewModel obj = new HousesListViewModel();
-            obj.allHouses = _allHouses.Houses;
+            RecomendedHousesListViewModel obj = new RecomendedHousesListViewModel();
+            obj.AllRecomendedHouses = _allRecomendedHouses.Houses;
 
             return View(obj);
         }
 
-        public ActionResult House()
+        public ActionResult Houses(int num = 1)
         {
-            return View();
+            HousesListViewModel obj = new HousesListViewModel();
+            _allHouses.Url = "https://www.holiday.by/by/dom?p=" + num;
+            obj.AllHouses = _allHouses.Houses;
+
+            return View(obj);
         }
     }
 }

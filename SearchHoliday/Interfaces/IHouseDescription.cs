@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SearchHoliday.Interfaces
 {
-    public interface IAllHouses
+    public interface IHouseDescription
     {
         string Url { get; set; }
-        IEnumerable<House> GetHouses { get; }
+        HouseDescription GetHousesDescription { get; }
     }
 }

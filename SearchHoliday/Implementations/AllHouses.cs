@@ -19,7 +19,7 @@ namespace SearchHoliday.Implementations
             get { return _url; }
             set { _url = value; }
         }
-        public IEnumerable<House> Houses
+        public IEnumerable<House> GetHouses
         { 
             get
             {
@@ -42,12 +42,15 @@ namespace SearchHoliday.Implementations
                                     string image = "";
                                     string type = "";
                                     string price = "";
+                                    string url = "";
 
                                     if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div:nth-child(1)>div>h3>a") != null)
                                     {
                                         name = (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div:nth-child(1)>div>h3>a").InnerText).TrimEnd();
                                         if (name.IndexOf("&amp;") != -1)
                                             name = name.Replace("&amp;", "&");
+                                        if (name.IndexOf("&quot;") != -1)
+                                            name = name.Replace("&quot;", "\"");
                                     }
 
                                     if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(1)>div>div:nth-child(1)>a") != null)
@@ -62,18 +65,30 @@ namespace SearchHoliday.Implementations
                                     if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div:nth-child(1)>div>span") != null)
                                         type = (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>div:nth-child(1)>div>span").InnerText).TrimEnd();
 
-                                    price = "120 pуб";
+                                    if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>span>span:nth-child(1)") != null)
+                                        price += item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>span>span:nth-child(1)").InnerText;
+                                    if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>span>span:nth-child(2)") != null)
+                                        price += item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>span>span:nth-child(2)").InnerText;
+                                    if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>span>span:nth-child(3)") != null)
+                                        price += item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>span>span:nth-child(3)").InnerText;
+                                    if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>span>span:nth-child(4)") != null)
+                                        price += " " + item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(2)>div:nth-child(2)>div:nth-child(1)>div:nth-child(1)>span>span:nth-child(4)").InnerText;
+                                    price.Trim();
 
+                                    if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})") != null)
+                                        url = (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)").GetAttributeValue("data-href", null)).TrimEnd();
+                                    url = url.Insert(0, "https://www.holiday.by");
 
                                     Houses.Add(new House
                                     {
-                                        id = k,
-                                        name = name,
-                                        type = type,
-                                        price = price,
-                                        image = image
+                                        Id = k,
+                                        Name = name,
+                                        Type = type,
+                                        Price = price,
+                                        Image = image,
+                                        UrlHouse = url,
+                                        UrlHousePhotos = url.Insert(url.Length, "/photo#content")
                                     });
-                                    //item.QuerySelector($"section>div.section-grids__wrap-grids>div>div:nth-child({k + 1})>a>div>div>div:nth-child(1)>span").InnerText
                                 }
                             }
 
@@ -81,7 +96,7 @@ namespace SearchHoliday.Implementations
                 }
                 catch
                 {
-                    List<House> Error = new List<House> { new House { name = "Что-то пошло не так..." } };
+                    List<House> Error = new List<House> { new House { Name = "Что-то пошло не так..." } };
                     return Error;
                 }
             }

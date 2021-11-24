@@ -5,6 +5,6 @@ namespace SearchHoliday.Interfaces
 {
     public interface IAllRecomendedHouses
     {
-        IEnumerable<House> Houses { get; }
+        IEnumerable<House> GetHouses { get; }
     }
 }

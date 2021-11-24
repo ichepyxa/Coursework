@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>SearchHoliday.Program</StartupObject>
+    <SignAssembly>false</SignAssembly>
+    <UserSecretsId>449c6eee-4e8a-4d4d-afec-25982afbc9fc</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

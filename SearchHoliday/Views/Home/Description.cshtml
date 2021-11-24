@@ -1,0 +1,200 @@
+﻿@model HouseDescriptionViewModel
+@{
+    var item = Model.HouseDescription;
+    if (item.Name == "Что-то пошло не так...")
+    {
+        Layout = null;
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>@item.Name</title>
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+            <link rel="stylesheet" href="~/css/layoutStyles.css" />
+        </head>
+        <body class="mb-0">
+            <div class="d-flex justify-content-center align-items-center w-100 vh-100 flex-column">
+                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-exclamation-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
+                </svg>
+                <h2 class="mb-4 mt-5 text-center">@item.Name</h2>
+                <button class="btn btn-outline-primary px-4" onclick="window.location.reload()">Повторить</button>
+            </div>
+        </body>
+        </html>
+    }
+    else
+    {
+        Layout = null;
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>@ViewData["Title"]</title>
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+            <link rel="stylesheet" href="~/css/descriptionStyles.css" />
+        </head>
+        <body>
+
+            <!-- Navbar -->
+            <header class="sticky-top">
+                <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom">
+                    <div class="container">
+                        <a href="/" class="navbar-brand">SearchHoliday</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="true">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarContent">
+                            <ul class="navbar-nav me-auto">
+                                <li class="nav-item">
+                                    <a href="/" class="nav-link">Главная</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/home/houses" class="nav-link">Места отдыха</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">Тест</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">Отзывы</a>
+                                </li>
+                            </ul>
+
+                            <div class="d-flex">
+                                <button class="btn btn-outline-primary">Регистрация</button>
+                                <button class="btn btn-primary ms-3">Войти</button>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+
+            <!-- Main -->
+            <main class="main w-100 py-3">
+                <div class="container">
+                    <h2 class="text-center mb-3">@ViewData["MainTitle"]</h2>
+                    <div class="main-inner d-lg-flex gap-4">
+                        <div class="main-inner__images d-flex w-60 justify-content-lg-start justify-content-sm-center gap-3 mb-3">
+                            @if ((item.Images == null) || ((item.Images[0] == "https://www.holiday.by") && (item.Images[1] == "https://www.holiday.by") && (item.Images[2] == "https://www.holiday.by")) || ((item.Images[0] == "") && (item.Images[1] == "") && (item.Images[2] == "")))
+                            {<div class="main-inner__images-image"></div> }
+                            else
+                            {
+                                <a href=@item.UrlHousePhotos class="main-inner__images-link"><img class="main-inner__images-image" src="@item.Images[0]" alt="" /></a>
+                                <div class="main-inner__images-mini d-lg-flex d-none flex-column justify-content-between gap-3">
+                                    <a href=@item.UrlHousePhotos class="main-inner__images-mini__link"><img class="main-inner__images-mini__image" src="@item.Images[1]" alt="" /></a>
+                                    <a href=@item.UrlHousePhotos class="main-inner__images-mini__link"><img class="main-inner__images-mini__image" src="@item.Images[2]" alt="" /></a>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="main-inner__prices d-flex w-30 flex-column justify-content-center mb-3">
+                            @if ((item.PriceForPerson != "") && (item.PricesForHouse[0] != "") && (item.PricesForHouse[1] != ""))
+                            {
+                                <h3 class="text-center mb-4">Цены</h3>
+                                <div class="main-inner-prices__person text-center mb-3 pb-1">
+                                    @if (item.PriceForPerson != "")
+                                    {<p class="main-inner-prices__person-price d-block">Цена на человека в сутки <span>@item.PriceForPerson</span></p>}
+                                </div>
+                                <h4 class="text-center">Цена за дом в сутки</h4>
+                                @if ((item.PricesForHouse[0] != "") && (item.PricesForHouse[1] != ""))
+                                {
+                                    <div class="main-inner-prices__house d-flex justify-content-between align-items-center text-center gap-4">
+                                        @if (item.PricesForHouse[0] != "")
+                                        {<p class="main-inner-prices__house-price d-block">в буднее дни <span>@item.PricesForHouse[0]</span></p>}
+                                        @if (item.PricesForHouse[1] != "")
+                                        {<p class="main-inner-prices__house-price d-block">в выходные дни <span>@item.PricesForHouse[1]</span></p>}
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <h3 class="text-center mb-4">Цены</h3>
+                                <div class="text-center">Цены отсутствуют</div>
+                            }
+                        </div>
+                    </div>
+                    @*<h5 class="main-inner__item-content__inner-type">@item.Type</h5>*@
+                    <h2 class="my-3">Описание</h2>
+                    @if (item.Description.Value != "") { <div class="main-inner__item-content__inner-description">@item.Description</div> }
+                    else { <div class="main-inner__item-content__inner-description">Описание отсутствует</div> }
+                </div>
+            </main>
+
+
+            <!-- Footer -->
+            <footer class="footer border-top py-3 bg-white text-center">
+                <div class="container">
+                    <p class="copyright">
+                        &copy; 2021 - SearchHoliday
+                    </p>
+                    <ul class="footer-nav nav justify-content-center">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link">Главная</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/home/houses" class="nav-link">Места отдыха</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Тест</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Отзывы</a>
+                        </li>
+                    </ul>
+                </div>
+            </footer>
+
+            <!-- Disclamer -->
+            <section class="disclamer fixed-bottom bg-white border-top py-3">
+                <div class="container d-flex justify-content-between align-items-center">
+                    <div class="disclamer-content">
+                        Все материалы взяты с сайта <strong><a href="https://www.holiday.by/by" class="disclamer-link" target="_blank">Туристический портал Беларуси Holiday.by</a></strong>
+                    </div>
+                    <div class="disclamer-btn">
+                        <i class="disclamer-btn__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill="#000000">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+                            </svg>
+                        </i>
+                    </div>
+                </div>
+            </section>
+
+            <script src="~/lib/jquery/dist/jquery.min.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+            <scrip src="~/lib/jquery-validation/dist/jquery.validate.min.js"></scrip>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        </body>
+        </html>
+
+    @*<div class="main-inner__item">
+            @if (item.Images == null)
+            { <div class="main-inner__item-image"></div> }
+            else
+            {
+                <a href=@item.UrlHousePhotos class="main-inner__item-link"><img class="main-inner__item-image" src="@item.Images[0]" alt="" /></a>
+                <a href=@item.UrlHousePhotos class="main-inner__item-link"><img class="main-inner__item-image" src="@item.Images[1]" alt="" /></a>
+                <a href=@item.UrlHousePhotos class="main-inner__item-link"><img class="main-inner__item-image" src="@item.Images[2]" alt="" /></a>
+            }
+
+            <div class="main-inner__item-content d-xxl-flex justify-content-between align-items-end">
+                <div class="main-inner__item-content__inner">
+                    <h3 class="main-inner__item-content__inner-title">@item.Name</h3>
+                    <h5 class="main-inner__item-content__inner-type">@item.Type</h5>
+                    <div class="main-inner__item-content__inner-description">@item.Description</div>
+                    <div class="main-inner__item-content__inner-price d-block">Цена на человека в сутки @item.PriceForPerson</div>
+                    @if (item.PricesForHouse[0] != "") { <div class="main-inner__item-content__inner-price d-block">Цена за дом в сутки в буднее дни @item.PricesForHouse[0]</div> }
+                    @if (item.PricesForHouse[1] != "") { <div class="main-inner__item-content__inner-price d-block">Цена за дом в сутки в выходные дни @item.PricesForHouse[1]</div> }
+                </div>
+                <a href="@item.UrlHouse" class="main-inner__item-content__btn btn btn-primary mt-2">Подробнее</a>
+            </div>
+        </div>*@
+    }
+}

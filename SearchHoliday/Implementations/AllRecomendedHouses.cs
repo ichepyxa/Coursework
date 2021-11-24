@@ -14,7 +14,7 @@ namespace SearchHoliday.Implementations
 {
     public class AllRecomendedHouses : IAllRecomendedHouses
     {   
-        public IEnumerable<House> Houses 
+        public IEnumerable<House> GetHouses
         {
             get
             {
@@ -37,6 +37,7 @@ namespace SearchHoliday.Implementations
                                     string image = "";
                                     string type = "";
                                     string price = "";
+                                    string url = "";
 
                                     if (item.QuerySelector($"section>div.section-grids__wrap-grids>div>div:nth-child({k + 1})>a>div>h3") != null)
                                     {
@@ -60,13 +61,19 @@ namespace SearchHoliday.Implementations
                                     if (item.QuerySelector($"section>div.section-grids__wrap-grids>div>div:nth-child({k + 1})>a>div>div>div:nth-child(1)>span") != null)
                                         price = (item.QuerySelector($"section>div.section-grids__wrap-grids>div>div:nth-child({k + 1})>a>div>div>div:nth-child(1)>span").InnerText).TrimEnd();
 
+                                    if (item.QuerySelector($"section>div.section-grids__wrap-grids>div>div:nth-child({k + 1})>a") != null)
+                                        url = (item.QuerySelector($"section>div.section-grids__wrap-grids>div>div:nth-child({k + 1})>a").GetAttributeValue("href", null)).TrimEnd();
+                                    url = url.Insert(0, "https://www.holiday.by");
+
                                     RecomendedHouses.Add(new House
                                     {
-                                        id = k,
-                                        name = name,
-                                        type = type,
-                                        price = price,
-                                        image = image
+                                        Id = k,
+                                        Name = name,
+                                        Type = type,
+                                        Price = price,
+                                        Image = image,
+                                        UrlHouse = url,
+                                        UrlHousePhotos = url.Insert(url.Length, "/photo#content")
                                     });
                                     i++;
                                 }
@@ -75,7 +82,7 @@ namespace SearchHoliday.Implementations
                 }
                 catch
                 {
-                    List<House> Error = new List<House> { new House { name = "Что-то пошло не так..." } };
+                    List<House> Error = new List<House> { new House { Name = "Что-то пошло не так..." } };
                     return Error;
                 }
             }

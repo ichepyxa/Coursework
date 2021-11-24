@@ -2,7 +2,7 @@
 @{
     @foreach (var item in Model.AllRecomendedHouses)
     {
-        if (item.name == "Что-то пошло не так...")
+        if (item.Name == "Что-то пошло не так...")
         {
             Layout = null;
             <!DOCTYPE html>
@@ -10,9 +10,9 @@
             <head>
                 <meta charset="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <title>@item.name</title>
+                <title>@item.Name</title>
                 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-                <link rel="stylesheet" href="~/css/site.css" />
+                <link rel="stylesheet" href="~/css/layoutStyles.css" />
             </head>
             <body class="mb-0">
                 <div class="d-flex justify-content-center align-items-center w-100 vh-100 flex-column">
@@ -20,7 +20,7 @@
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
                         <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z" />
                     </svg>
-                    <h2 class="mb-4 mt-5 text-center">@item.name</h2>
+                    <h2 class="mb-4 mt-5 text-center">@item.Name</h2>
                     <button class="btn btn-outline-primary px-4" onclick="window.location.reload()">Повторить</button>
                 </div>
             </body>
@@ -29,10 +29,31 @@
         else
         {
             <div class="main-inner__item">
-                <h3 class="main-inner__item-title">@item.name</h3>
-                <h5 class="main-inner__item-type">@item.type</h5>
-                <span class="main-inner__item-price d-block">@item.price</span>
-                <img class="main-inner__item-image" src="@item.image" alt="" />
+                @if (item.Image == "https://www.holiday.by") { <div class="main-inner__item-image"></div> }
+                else { <a href=@item.UrlHousePhotos class="main-inner__item-link"><img class="main-inner__item-image" src="@item.Image" alt="" /></a> }
+
+                @if (item.Name.Length > 1)
+                {
+                    <div class="main-inner__item-content d-xxl-flex justify-content-between align-items-end">
+                        <div class="main-inner__item-content__inner">
+                            <h3 class="main-inner__item-content__inner-title">@item.Name</h3>
+                            <h5 class="main-inner__item-content__inner-type">@item.Type</h5>
+                            <span class="main-inner__item-content__inner-price d-block">@item.Price</span>
+                        </div>
+                        <a href="/home/description?url=@item.UrlHouse" class="main-inner__item-content__btn btn btn-primary mt-2">Подробнее</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="main-inner__item-content d-xl-flex justify-content-between align-items-end">
+                        <div class="main-inner__item-content__inner">
+                            <h3 class="main-inner__item-content__inner-title">@item.Name</h3>
+                            <h5 class="main-inner__item-content__inner-type">@item.Type</h5>
+                            <span class="main-inner__item-content__inner-price d-block">@item.Price</span>
+                        </div>
+                        <a href="/home/description?url=@item.UrlHouse" class="main-inner__item-content__btn btn btn-primary mt-2">Подробнее</a>
+                    </div>
+                }
             </div>
         }
     }

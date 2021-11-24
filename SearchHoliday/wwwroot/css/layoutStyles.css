@@ -1,0 +1,121 @@
+﻿/* Common Styles */
+body {
+    position: relative;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+}
+
+/* Bootstrap Styles */
+
+.nav .nav-item .nav-link {
+    color: rgba(0, 0, 0, 0.55);
+}
+
+.nav .nav-item .nav-link:hover {
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.page-control .nav .nav-item .nav-link {
+    color: rgba(0, 0, 0, 0.7);
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+.page-control .nav .nav-item.active .nav-link {
+    color: #0d6efd;
+}
+
+.page-control .nav .nav-item .nav-link:hover:not(.nav-link.divider) {
+    color: #0d6efd;
+}
+
+.page-control .nav .nav-item.divider .nav-link.divider {
+    text-decoration: none;
+}
+
+.mw-50 {
+    max-width: 50% !important;
+}
+
+/* Main Styles */
+
+.main-inner__item {
+    overflow: hidden;
+    flex-basis: 33%;
+    height: 320px;
+    text-align: center;
+    position: relative;
+    padding-top: 20px;
+    border-radius: 5px;
+}
+
+.main-inner__item-image {
+    width: 90%;
+    height: 100%;
+    position: relative;
+    margin: 0 auto;
+    object-fit: cover;
+    transition: .2s ease-in-out;
+    border-radius: 5px;
+    cursor: pointer;
+    object-position: center;
+    background: #EEEEEE url(../images/no-photo.svg) 50% 50% no-repeat;
+}
+
+a.main-inner__item-link:hover ~ .main-inner__item-content {
+    transform: translateY(100%);
+}
+
+a.main-inner__item-link:active ~ .main-inner__item-content {
+    transform: translateY(100%);
+}
+
+.main-inner__item-content {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+    padding: 10px 15px;
+    bottom: 0;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.4);
+    transition: .1s ease-in-out;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.main-inner__item-content__inner {
+    text-align: left;
+    word-break: break-word;
+}
+
+/*.main-inner__item-content__inner-title {
+    font-size: 40px;
+}
+*/
+.main-inner__item-content__inner-type {
+}
+
+.main-inner__item-content__inner-price {
+
+}
+
+.main-inner__item-content__btn {
+
+}
+
+.disclamer-btn {
+    cursor: pointer;
+}
+
+.footer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+}

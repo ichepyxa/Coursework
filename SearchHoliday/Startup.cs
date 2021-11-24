@@ -26,6 +26,7 @@ namespace SearchHoliday
         {
             services.AddTransient<IAllRecomendedHouses, AllRecomendedHouses>();
             services.AddTransient<IAllHouses, AllHouses>();
+            services.AddTransient<IHouseDescription, HousesDescription>();
             services.AddMvc();
         }
 
@@ -34,12 +35,13 @@ namespace SearchHoliday
         {
             if (env.IsDevelopment())
             {
-                app.UseStatusCodePages();
+                /*app.UseStatusCodePages();*/
                 app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/Error");
             }
             else
             {
-                app.UseExceptionHandler("/Home/Index");
+                app.UseExceptionHandler("/Error");
             }
             app.UseStaticFiles();
             app.UseRouting();

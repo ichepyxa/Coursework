@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/layoutStyles.css" />
 </head>
 <body>
 
@@ -13,7 +13,7 @@
     <header class="sticky-top">
         <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom">
             <div class="container">
-                <a href="/" class="navbar-brand">SearchHoliday</a>
+                <a href="/" class="navbar-brand"><img src="~/images/icon2.png" alt="logo" />SearchHoliday</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="true">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -45,21 +45,64 @@
 
 
     <!-- Main -->
-    <main class="main w-100 pb-3">
+    <main class="main w-100 py-3">
         <div class="container">
-            <div class="main-inner d-flex align-items-center justify-content-between flex-wrap g-3">
+            <h2 class="text-center">@ViewData["MainTitle"]</h2>
+            <div class="main-inner d-md-flex align-items-center justify-content-between flex-wrap">
                 @RenderBody()
             </div>
+            @if (ViewData["IsError"].ToString() == "Нет")
+            {
+                <div class="page-control d-flex justify-content-center align-items-center flex-column">
+                    <div class="page-control__btns d-flex justify-content-center align-items-center text-center mt-3 flex-wrap">
+                        <button class="page-control__btns-prev btn btn-outline-primary mx-3">Назад</button>
+                        <button class="page-control__btns-next btn btn-outline-primary mx-3">Далее</button>
+                    </div>
+                </div>
+            }
         </div>
     </main>
 
 
     <!-- Footer -->
-    <footer class="footer border-top py-3">
+    <footer class="footer border-top py-3 bg-white text-center">
         <div class="container">
-            &copy; 2021 - SearchHoliday - Все материалы взяты с сайта <a href="https://www.holiday.by/by" target="_blank">Holiday.by</a>
+            <p class="copyright">
+                &copy; 2021 - SearchHoliday
+            </p>
+            <ul class="footer-nav nav justify-content-center">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/home/houses" class="nav-link">Места отдыха</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Тест</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Отзывы</a>
+                </li>
+            </ul>
         </div>
     </footer>
+
+    <!-- Disclamer -->
+    <section class="disclamer fixed-bottom bg-white border-top py-3">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="disclamer-content">
+                Все материалы взяты с сайта <strong><a href="https://www.holiday.by/by" class="disclamer-link" target="_blank">Туристический портал Беларуси Holiday.by</a></strong>
+            </div>
+            <div class="disclamer-btn">
+                <i class="disclamer-btn__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="35px" viewBox="0 0 24 24" width="35px" fill="#000000">
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+                    </svg>
+                </i>
+            </div>
+        </div>
+    </section>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>

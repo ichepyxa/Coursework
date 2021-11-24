@@ -1,0 +1,160 @@
+﻿/* Common Styles */
+
+a {
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Bootstrap Styles */
+
+.nav .nav-item .nav-link {
+    color: rgba(0, 0, 0, 0.55);
+}
+
+    .nav .nav-item .nav-link:hover {
+        color: rgba(0, 0, 0, 0.8);
+    }
+
+.page-control .nav .nav-item .nav-link {
+    color: rgba(0, 0, 0, 0.7);
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+.page-control .nav .nav-item.active .nav-link {
+    color: #0d6efd;
+}
+
+.page-control .nav .nav-item .nav-link:hover:not(.nav-link.divider) {
+    color: #0d6efd;
+}
+
+.page-control .nav .nav-item.divider .nav-link.divider {
+    text-decoration: none;
+}
+
+h4 {
+    font-weight: 400;
+}
+
+.w-60 {
+    width: 100% !important;
+}
+
+.w-30 {
+    width: 80% !important;
+}
+
+@media (min-width: 576px) {
+    .w-60 {
+        width: 100% !important;
+    }
+
+    .w-30 {
+        width: 60% !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .w-60 {
+        width: 100% !important;
+    }
+
+    .w-30 {
+        width: 50% !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .w-60 {
+        width: 100% !important;
+    }
+
+    .w-30 {
+        width: 30% !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .w-60 {
+        width: 60% !important;
+    }
+
+    .w-30 {
+        width: 30% !important;
+    }
+}
+
+@media (min-width: 1400px) {
+    .w-60 {
+        width: 60% !important;
+    }
+
+    .w-30 {
+        width: 30% !important;
+    }
+}
+
+/* Main Styles */
+
+.main-inner__images {
+    height: 400px;
+    overflow: hidden;
+}
+
+.main-inner__images-link {
+    height: 100%;
+    flex-basis: 100%;
+}
+
+.main-inner__images-image {
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    background: #EEEEEE url(../images/no-photo.svg) 50% 50% no-repeat;
+}
+
+.main-inner__images-mini {
+    flex-basis: 35%;
+}
+
+.main-inner__images-mini__link {
+    height: 48%;
+}
+
+.main-inner__images-mini__image {
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    background: #EEEEEE url(../images/no-photo.svg) 50% 50% no-repeat;
+}
+
+.main-inner__item-content__inner-description {
+    word-break: break-word;
+}
+
+.main-inner__prices {
+    margin: 0 auto;
+}
+
+.main-inner-prices__person-price span {
+    font-size: 24px;
+    display: block;
+}
+
+.main-inner-prices__house {
+    word-break: break-word;
+}
+
+.main-inner-prices__house-price span {
+    font-size: 24px;
+    display: block;
+}

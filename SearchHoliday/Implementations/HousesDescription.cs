@@ -42,6 +42,7 @@ namespace SearchHoliday.Implementations
                     HouseDescription HouseDescription = new HouseDescription();
 
                     foreach (var item in hap.DocumentNode.QuerySelectorAll("div.section-header__title-col"))
+                    {
                         if (item.QuerySelector($"div:nth-child(1)") != null)
                         {
                             name = (hap.DocumentNode.QuerySelector($"div:nth-child(1)>h1").InnerText).TrimEnd();
@@ -53,6 +54,7 @@ namespace SearchHoliday.Implementations
                             if (item.QuerySelector($"div:nth-child(1)>a") != null)
                                 type = (item.QuerySelector($"div:nth-child(1)>a").InnerText).TrimEnd();
                         }
+                    }
 
                     foreach (var item in hap.DocumentNode.QuerySelectorAll("section.top-apartment-card"))
                     {
@@ -127,8 +129,7 @@ namespace SearchHoliday.Implementations
                 }
                 catch
                 {
-                    HouseDescription Error = new HouseDescription { Name = "Что-то пошло не так..." };
-                    return Error;
+                    return new HouseDescription { IsError = true };
                 }
             }
         }

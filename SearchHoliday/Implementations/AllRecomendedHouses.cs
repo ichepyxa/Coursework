@@ -29,8 +29,11 @@ namespace SearchHoliday.Implementations
                     List<House> RecomendedHouses = new List<House>();
 
                     foreach (var item in hap.DocumentNode.QuerySelectorAll("div.main-section__inner"))
+                    {
                         if (i <= 0)
+                        {
                             for (int k = 0; k < 10; k++)
+                            {
                                 if (item.QuerySelector($"section>div.section-grids__wrap-grids>div>div:nth-child({k + 1})>a>div") != null)
                                 {
                                     string name = "";
@@ -77,13 +80,15 @@ namespace SearchHoliday.Implementations
                                     });
                                     i++;
                                 }
+                            }
+                        }
+                    }
 
                     return RecomendedHouses;
                 }
                 catch
                 {
-                    List<House> Error = new List<House> { new House { Name = "Что-то пошло не так..." } };
-                    return Error;
+                    return new List<House> { new House { IsError = true } };
                 }
             }
         

@@ -33,7 +33,9 @@ namespace SearchHoliday.Implementations
                     List<House> Houses = new List<House>();
 
                     foreach (var item in hap.DocumentNode.QuerySelectorAll("div.cottages-list-cols"))
+                    {
                         for (int k = 0; k < 40; k++)
+                        {
                             if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)") != null)
                             {
                                 if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})").GetAttributeValue("class", null) == "tours-list-col__wrap-line-card")
@@ -54,7 +56,7 @@ namespace SearchHoliday.Implementations
                                     }
 
                                     if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(1)>div>div:nth-child(1)>a") != null)
-                                         image = (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(1)>div>div:nth-child(1)>a").GetAttributeValue("style", null)).TrimEnd();
+                                        image = (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(1)>div>div:nth-child(1)>a").GetAttributeValue("style", null)).TrimEnd();
                                     else if (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(1)>div>span") != null)
                                         image = (item.QuerySelector($"div:nth-child(2)>div:nth-child(2)>div:nth-child({k + 1})>div:nth-child(1)>div:nth-child(1)>div>span").GetAttributeValue("style", null)).TrimEnd();
 
@@ -91,13 +93,14 @@ namespace SearchHoliday.Implementations
                                     });
                                 }
                             }
+                        }
+                    }
 
                     return Houses;
                 }
                 catch
                 {
-                    List<House> Error = new List<House> { new House { Name = "Что-то пошло не так..." } };
-                    return Error;
+                    return new List<House> { new House { IsError = true } };
                 }
             }
         }

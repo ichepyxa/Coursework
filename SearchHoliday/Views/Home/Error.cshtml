@@ -1,4 +1,4 @@
-﻿@Layout = null;
+﻿@Layout=null
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +17,7 @@
         <h2 class="mb-4 mt-5 text-center">Ошибка 404</h2>
         <h4>Страница не найдена</h4>
         <button class="btn btn-outline-primary px-4" onclick="window.location.href = '/'">Перейти на главную</button>
+        @ViewData["List"]
     </div>
 </body>
 </html>

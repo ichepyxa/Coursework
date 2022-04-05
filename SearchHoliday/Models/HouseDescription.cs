@@ -17,5 +17,6 @@ namespace SearchHoliday.Models
         public HtmlString Description { get; set; }
         public string UrlHouse { get; set; }
         public string UrlHousePhotos { get; set; }
+        public bool IsError { get; set; }
     }
 }

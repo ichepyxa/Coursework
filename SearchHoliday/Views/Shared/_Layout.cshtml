@@ -6,6 +6,8 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/layoutStyles.css" />
+    <link rel="stylesheet" href="~/css/descriptionStyles.css" />
+    <link rel="stylesheet" href="~/css/questionsStyles.css" />
 </head>
 <body>
 
@@ -13,7 +15,7 @@
     <header class="sticky-top">
         <nav class="navbar navbar-expand-md navbar-light bg-white border-bottom">
             <div class="container">
-                <a href="/" class="navbar-brand"><img src="~/images/icon2.png" alt="logo" />SearchHoliday</a>
+                <a href="/" class="navbar-brand">SearchHoliday</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="true">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -27,7 +29,7 @@
                             <a href="/home/houses" class="nav-link">Места отдыха</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Тест</a>
+                            <a href="/home/test" class="nav-link">Тест</a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">Отзывы</a>
@@ -46,10 +48,11 @@
 
     <!-- Main -->
     <main class="main w-100 py-3">
-        <div class="container">
+        @RenderBody()
+        @*<div class="container">
             <h2 class="text-center">@ViewData["MainTitle"]</h2>
             <div class="main-inner d-md-flex align-items-center justify-content-between flex-wrap">
-                @RenderBody()
+
             </div>
             @if (ViewData["IsError"].ToString() == "Нет")
             {
@@ -60,7 +63,7 @@
                     </div>
                 </div>
             }
-        </div>
+        </div>*@
     </main>
 
 
@@ -68,7 +71,7 @@
     <footer class="footer border-top py-3 bg-white text-center">
         <div class="container">
             <p class="copyright">
-                &copy; 2021 - SearchHoliday
+                &copy; 2021 - 2022 SearchHoliday
             </p>
             <ul class="footer-nav nav justify-content-center">
                 <li class="nav-item">
@@ -78,7 +81,7 @@
                     <a href="/home/houses" class="nav-link">Места отдыха</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Тест</a>
+                    <a href="/home/test" class="nav-link">Тест</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">Отзывы</a>

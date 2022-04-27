@@ -1,6 +1,10 @@
 ﻿@model HousesQuestionsViewModel
 @{
-    if (Model.HousesQuestion.First().Title == "Что-то пошло не так...")
+    int counterName = 1;
+    int counterAnswer = 1;
+    int counterQuestion = 1;
+
+    if (Model.HousesQuestions.First().Title == "Что-то пошло не так...")
     {
         Layout = null;
         <!DOCTYPE html>
@@ -26,27 +30,36 @@
     }
     else
     {
-        @*<div class="container">
-            <h2 class="text-center">Тест по подбору мест для отдыха</h2>
-            <div class="main-questions d-md-flex align-items-center justify-content-center flex-column">
-           @foreach (var item in Model.HousesQuestion)
-            {
-                <div class="questions-item d-flex align-items-center justify-content-center flex-column">
-                    <h4 class="item__question">@item.Question</h4>
-                    <div class="item__answers d-flex flex-column gap-3">
-                        @foreach (string element in item.Answers)
-                        {
-                            <div class="item__answers-answer">
-                                <label class="answer__label d-flex align-items-center gap-3">
-                                    <input type="radio" id=@item.Id name=@item.Id value=@element class="answer__input">
-                                    @element
-                                </label>
-                            </div>
-                        }
+        <div class="container">
+            <h2 class="text-center mb-3">Тест по подбору мест для отдыха</h2>
+            <div class="main-questions d-flex align-items-center justify-content-center flex-column gap-5">
+                @foreach (var itemQuestion in Model.HousesQuestions)
+                {
+                    <div class="questions-item d-flex align-items-center flex-column h-100">
+                        <h4 class="text-center">Вопрос №@counterQuestion</h4>
+                        <h6 class="text-center item__question">Вопрос: @itemQuestion.Question</h6>
+                        <div class="list-group list-group-checkable item__answers d-flex justify-content-center flex-column gap-3">
+                            @for (int i = 0; i < Model.HousesAnswers.Count(); i++)
+                            {
+                                if (Model.HousesAnswers.ElementAt(i).QuestionsId == itemQuestion.Id)
+                                {
+                                    <input class="list-group-item-check" type="radio" name="answers_@counterName" id="@i" value="">
+                                    <label class="list-group-item py-3" for="@i">
+                                        <span class="d-block small opacity-50">Ответ №@counterAnswer</span>
+                                        @Model.HousesAnswers.ElementAt(i).AnswerText
+                                    </label>
+                                    counterAnswer++;
+                                }
+                            }
+                        </div>
                     </div>
-                </div>
-            }
+
+                    counterName++;
+                    counterAnswer = 1;
+                    counterQuestion++;
+                }
+                <button class="questions-btn my-4 btn btn-lg btn-primary">Завершить</button>
             </div>
-        </div>*@
+        </div>
     }
 }

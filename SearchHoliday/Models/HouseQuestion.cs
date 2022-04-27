@@ -10,8 +10,8 @@ namespace SearchHoliday.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Question { get; set; }
-        public string Answers { get; set; }
         public string RightAnswer { get; set; }
+        public int TypeQuestion { get; set; }
         public bool IsError { get; set; }
     }
 }

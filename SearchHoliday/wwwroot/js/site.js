@@ -1,4 +1,4 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
+﻿const disclamer = () => {
     if (!localStorage.getItem('disclamer')) {
         document.querySelector('.disclamer-btn').addEventListener('click', () => {
             document.querySelector('.disclamer').remove()
@@ -7,7 +7,9 @@
     } else {
         document.querySelector('.disclamer').remove()
     }
+}
 
+const pageController = () => {
     if (document.querySelector('.page-control') != null) {
         const pageControl = document.querySelector('.page-control')
         const pageControlBtnsPrev = pageControl.querySelector('.page-control__btns-prev')
@@ -15,12 +17,12 @@
         const href = window.location.href
         let request = "1"
 
-        if (href.indexOf('?') != -1) request = href.substring(href.indexOf('?') + 5);
+        if (href.indexOf('?') != -1) request = href.substring(href.indexOf('?') + 5)
 
         const pageControlUl = document.createElement('ul');
         pageControlUl.className = 'page-control__num nav justify-content-center'
         if (request <= 2) {
-            pageControlUl.innerHTML = 
+            pageControlUl.innerHTML =
                 `
                     <li class="nav-item">
                         <a href="?num=1" class="nav-link">1</a>
@@ -42,7 +44,7 @@
                     </li> 
                 `
         } else if ((request > 2) && (request <= 4)) {
-            pageControlUl.innerHTML = 
+            pageControlUl.innerHTML =
                 `
                     <li class="nav-item">
                         <a href="?num=1" class="nav-link">1</a>
@@ -67,7 +69,7 @@
                     </li> 
                 `
         } else if ((request >= 5) && (request < 258)) {
-            pageControlUl.innerHTML = 
+            pageControlUl.innerHTML =
                 `
                     <li class="nav-item">
                         <a href="?num=1" class="nav-link">1</a>
@@ -172,4 +174,9 @@
             else location.href = href + `?num=${request}`
         })
     }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    disclamer()
+    pageController()
 })

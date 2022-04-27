@@ -21,7 +21,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarContent">
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav me-auto" style="margin: 5px 0;">
                         <li class="nav-item">
                             <a href="/" class="nav-link">Главная</a>
                         </li>
@@ -36,10 +36,40 @@
                         </li>
                     </ul>
 
-                    <div class="d-flex">
-                        <button class="btn btn-outline-primary">Регистрация</button>
-                        <button class="btn btn-primary ms-3">Войти</button>
-                    </div>
+                    <div class="divider"></div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="userNav dropdown">
+                            <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                            </a>
+                            <ul class="userNav dropdown-menu text-small shadow" style="left: -5.1rem;" aria-labelledby="dropdownUser" data-popper-placement="bottom-start">
+                                <li><a class="dropdown-item" href="#">Профиль</a></li>
+                                <li><a class="dropdown-item" href="#">Настройки</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/account/logout">Выйти</a></li>
+                            </ul>
+                        </div>
+
+                        <ul class="userNav userNav--mobile">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Профиль</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Настройки</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/account/logout" class="nav-link">Выйти</a>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="/account/register" class="btn btn-outline-primary w-100">Регистрация</a>
+                            <a href="/account/login" class="btn btn-primary ms-3 w-100">Войти</a>
+                        </div>
+                    }
                 </div>
             </div>
         </nav>

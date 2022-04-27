@@ -8,7 +8,6 @@ namespace SearchHoliday.Interfaces
 {
     public interface IHousesQuestions
     {
-        string Url { get; set; }
         IEnumerable<HouseQuestion> GetHousesQuestions { get; }
     }
 }

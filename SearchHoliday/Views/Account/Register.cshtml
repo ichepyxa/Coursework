@@ -1,0 +1,60 @@
+﻿@*@model List<string>*@
+@{
+    <div class="container">
+        <form method="post" class="form-signup">
+            <h2 class="mb-3 fw-normal text-center">Регистрация</h2>
+
+            <div class="form-floating">
+                <input type="email" name="email" class="form-control" id="floatingInput" placeholder="Email" required>
+                <label for="floatingInput">Адрес электронной почты</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                <label for="floatingPassword">Пароль</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="confirmPassword" class="form-control" id="floatingConfirmPassword" placeholder="Confirm password" required>
+                <label for="floatingConfirmPassword">Подтвердите пароль</label>
+            </div>
+
+            <button id="registerBtn" class="w-100 btn btn-lg btn-primary" type="submit">Зарегистрироваться</button>
+            <p class="small text-center text-gray-soft">У вас уже есть аккаунт? <a href="/account/login">Войти</a></p>
+        </form>
+    </div>
+
+    <script>
+        const register = () => {
+            const registerBtn = document.querySelector('#registerBtn')
+            const email = document.querySelector('#floatingEmail')
+            const password = document.querySelector('#floatingPassword')
+            const confirmPassword = document.querySelector('#floatingConfirmPassword')
+
+            if (password !== confirmPassword)
+                return
+
+            if (registerBtn) {
+                registerBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.target.disabled = true
+
+                    const formData = new FormData()
+                    formData.append('email', email.value)
+                    formData.append('password', password.value)
+
+                    fetch('/Account/Register', {
+                        method: 'POST',
+                        body: formData
+                    }).then(res => {
+                        if (res.redirected) {
+                            document.location = res.url
+                        }
+                    }).finally(() => {
+                        e.target.disabled = false
+                    })
+                })
+            }
+        }
+
+        register();
+    </script>
+}

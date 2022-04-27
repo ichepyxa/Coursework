@@ -109,11 +109,11 @@ namespace SearchHoliday.Implementations
                     }
 
                     if (hap.DocumentNode.QuerySelector($"div#content>div:nth-child(2)>div:nth-child(2)>div:nth-child(2)") != null)
-                        description = new HtmlString((hap.DocumentNode.QuerySelector($"div#content>div:nth-child(2)>div:nth-child(2)>div:nth-child(2)>article>div").InnerHtml).Trim());
+                        description = new HtmlString((hap.DocumentNode.QuerySelector($"div#content>div:nth-child(2)>div:nth-child(2)>div:nth-child(2)>article>div").InnerHtml.Replace("<a", "<span").Replace("a>", "span>").Replace("<p></p>", "").Replace("<p> </p>", "")).Trim());
 
                     if (description.Value == "")
                         if (hap.DocumentNode.QuerySelector($"div.content-main-card>div:nth-child(2)>div:nth-child(2)") != null)
-                            description = new HtmlString((hap.DocumentNode.QuerySelector($"div.content-main-card>div:nth-child(2)>div:nth-child(2)>article>div").InnerHtml).Trim());
+                            description = new HtmlString((hap.DocumentNode.QuerySelector($"div.content-main-card>div:nth-child(2)>div:nth-child(2)>article>div").InnerHtml.Replace("<a", "<span").Replace("a>", "span>").Replace("<p></p>", "").Replace("<p> </p>", "")).Trim());
 
                     HouseDescription.Name = name;
                     HouseDescription.Type = type;

@@ -1,40 +1,35 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Leaf.xNet;
-using Fizzler;
-using Fizzler.Systems.HtmlAgilityPack;
-using HtmlAgilityPack;
-using System.Text.RegularExpressions;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using SearchHoliday.Views;
 using SearchHoliday.Models;
-using SearchHoliday.Implementations;
 using SearchHoliday.Interfaces;
 using SearchHoliday.ViewsModels;
-using MySql.Data.MySqlClient;
-using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace SearchHoliday.Controllers
 {
+    //[Route("home")]
     public class HomeController : Controller
     {
         private readonly IAllRecomendedHouses _allRecomendedHouses;
         private readonly IAllHouses _allHouses;
         private readonly IHouseDescription _houseDescription;
         private readonly IHousesQuestions _housesQuestions;
-        private ApplicationContext _db = new ApplicationContext();
+        private ApplicationContext _db;
 
-        public HomeController(IAllRecomendedHouses allRecomendedHouses, IAllHouses allHouses, IHouseDescription houseDescription, IHousesQuestions housesQuestions)
+        public HomeController(IAllRecomendedHouses allRecomendedHouses, IAllHouses allHouses, IHouseDescription houseDescription, IHousesQuestions housesQuestions, ApplicationContext db)
         {
             _allRecomendedHouses = allRecomendedHouses;
             _allHouses = allHouses;
             _houseDescription = houseDescription;
             _housesQuestions = housesQuestions;
+            _db = db;
         }
 
+        /*[Route("home")]
+        [Route("")]
+        [Route("~/")]*/
         public ActionResult Index()
         {
             RecomendedHousesListViewModel obj = new RecomendedHousesListViewModel();
@@ -75,53 +70,63 @@ namespace SearchHoliday.Controllers
             return View(obj);
         }
 
+        [Authorize]
+        public List<HouseAnswer> GetAnswers()
+        {
+            List<HouseAnswer> obj = new List<HouseAnswer>();
+            obj =
+            (
+                from answer in _db.HousesAnswers
+                select new HouseAnswer
+                {
+                    Id = answer.Id,
+                    AnswerText = answer.AnswerText,
+                    QuestionsId = answer.QuestionsId
+                }
+            ).ToList();
+
+            return obj;
+        }
+
+        [Authorize]
         public ActionResult Test()
         {
+            Console.WriteLine(User.Identity.Name);
+            Console.WriteLine(User.Identity.AuthenticationType);
             HousesQuestionsViewModel obj = new HousesQuestionsViewModel();
-            obj.HousesQuestion = _housesQuestions.GetHousesQuestions;
+            obj.HousesQuestions = 
+            (
+                from question in _db.HousesQuestions
+                select new HouseQuestion
+                {
+                    Id = question.Id,
+                    Title = question.Title,
+                    Question = question.Question,
+                    RightAnswer = question.RightAnswer,
+                    TypeQuestion = question.TypeQuestion,
+                    IsError = question.IsError
+                }
+            ).ToList();
+
+            obj.HousesAnswers =
+            (
+                from answer in _db.HousesAnswers
+                select new HouseAnswer
+                {
+                    Id = answer.Id,
+                    AnswerText = answer.AnswerText,
+                    QuestionsId = answer.QuestionsId
+                }
+            ).ToList();
 
             ViewData["Title"] = "SearchHoliday | сайт для подбора мест отдыха";
             ViewData["MainTitle"] = "Тест по поиску мест для отдыха";
 
-            if (obj.HousesQuestion.First().IsError == true) ViewData["IsError"] = "Да";
-            else ViewData["IsError"] = "";
+            //if (obj.HousesQuestions.First().IsError == true) ViewData["IsError"] = "Да";
+            //else ViewData["IsError"] = "";
+            ViewData["IsError"] = "";
 
             return View(obj);
-        }
-
-        [HttpPost]
-        public ActionResult Login(IFormCollection collection)
-        {
-            try
-            {
-                StringValues email, password;
-                if (collection.TryGetValue("email", out email) && collection.TryGetValue("password", out password))
-                {
-                    var user = _db.Users.Where(u => u.Login == email.ToString() && u.Password == password.ToString());
-                    if (user.Count() != 0)
-                    {
-                        return RedirectToAction("Houses");
-                    }
-                    else
-                    {
-                        
-                        return View();
-                    }
-                }
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult Login()
-        {
-            /*UsersViewModel obj = new UsersViewModel();
-            obj.AllUsers = _db.Users.ToList();*/
-
-            return View();
         }
 
         public ActionResult Error()

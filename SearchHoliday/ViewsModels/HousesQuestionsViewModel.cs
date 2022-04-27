@@ -8,6 +8,7 @@ namespace SearchHoliday.ViewsModels
 {
     public class HousesQuestionsViewModel
     {
-        public IEnumerable<HouseQuestion> HousesQuestion { get; set; }
+        public IEnumerable<HouseQuestion> HousesQuestions { get; set; }
+        public IEnumerable<HouseAnswer> HousesAnswers { get; set; }
     }
 }

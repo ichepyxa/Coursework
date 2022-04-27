@@ -8,7 +8,7 @@ a {
 }
 
 img {
-    width: 100%;
+    /*width: 100%;*/
 }
 
 body::-webkit-scrollbar {
@@ -27,6 +27,14 @@ body::-webkit-scrollbar-thumb {
 }
 
 /* Bootstrap Styles */
+
+.nav-link {
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    background-color: #f1f1f1;
+}
 
 .nav .nav-item .nav-link {
     color: rgba(0, 0, 0, 0.55);
@@ -58,8 +66,61 @@ body::-webkit-scrollbar-thumb {
     max-width: 50% !important;
 }
 
-/* Main Styles */
+/* Navbar */
+.divider {
+    display: block;
+    height: 0;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
 
+.userNav.userNav--mobile {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+}
+
+.userNav.userNav--mobile .nav-item {
+    list-style: none;
+    width: 100%;
+    text-align: center;
+}
+
+.userNav.userNav--mobile .nav-item .nav-link {
+    color: rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 576px) {
+    .userNav.userNav--mobile {
+        flex-direction: column;
+    }
+
+    .userNav.userNav--mobile .nav-item {
+        text-align: left;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-link {
+        padding: 0.5rem 1rem !important;
+    }
+
+    .userNav.dropdown {
+        display: none;
+    }
+
+    .divider {
+        display: block;
+    }
+
+    .userNav.userNav--mobile {
+        display: flex;
+    }
+}
+
+/* Main Styles */
 .main-inner__item {
     overflow: hidden;
     flex-basis: 33%;
@@ -125,7 +186,8 @@ a.main-inner__item-link:active ~ .main-inner__item-content {
 }
 
 /* Forms */
-.form-signin {
+.form-signin,
+.form-signup {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -137,7 +199,8 @@ a.main-inner__item-link:active ~ .main-inner__item-content {
     height: calc(100vh - 15.5rem);
 }
 
-.form-signin > * {
+.form-signin > *,
+.form-signup > * {
     width: 100%;
     margin-bottom: 10px;
 }

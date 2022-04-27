@@ -1,0 +1,52 @@
+﻿@*@model List<string>*@
+@{ 
+    <div class="container">
+        <form method="post" class="form-signin">
+            <h2 class="mb-3 fw-normal text-center">Вход</h2>
+
+            <div class="form-floating">
+                <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="Email" required>
+                <label for="floatingEmail">Адрес электронной почты</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                <label for="floatingPassword">Пароль</label>
+            </div>
+
+            <button id="loginBtn" class="w-100 btn btn-lg btn-primary" type="submit">Войти</button>
+            <p class="small text-center text-gray-soft">У вас ещё нету аккаунта? <a href="/account/register">Зарегестрироваться</a></p>
+        </form>
+    </div>
+
+    <script>
+        const login = () => {
+            const loginBtn = document.querySelector('#loginBtn')
+            const email = document.querySelector('#floatingEmail')
+            const password = document.querySelector('#floatingPassword')
+
+            if (loginBtn) {
+                loginBtn.addEventListener('click', (e) => {
+                    e.preventDefault()
+                    e.target.disabled = true
+
+                    const formData = new FormData()
+                    formData.append('email', email.value)
+                    formData.append('password', password.value)
+
+                    fetch('/Account/Login', {
+                        method: 'POST',
+                        body: formData
+                    }).then(res => {
+                        if (res.redirected) {
+                            document.location = res.url
+                        }
+                    }).finally(() => {
+                        e.target.disabled = false
+                    })
+                })
+            }
+        }
+
+        login();
+    </script>
+}

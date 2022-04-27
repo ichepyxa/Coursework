@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace SearchHoliday.Models
 {
-    public class User
+    public class HouseAnswer
     {
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Role { get; set; }
+        public string AnswerText { get; set; }
+        public int QuestionsId { get; set; }
     }
 }

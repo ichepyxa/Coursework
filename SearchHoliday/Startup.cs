@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,20 +26,26 @@ namespace SearchHoliday
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ApplicationContext>(options => options.UseMySql(
+                "server=localhost;uid=root;password=root;persistsecurityinfo=True;database=searchholiday;sslMode=none",
+                new MySqlServerVersion(new Version(8, 0, 11))
+            ));
 
             services.AddTransient<IAllRecomendedHouses, AllRecomendedHouses>();
             services.AddTransient<IAllHouses, AllHouses>();
             services.AddTransient<IHouseDescription, HousesDescription>();
             services.AddTransient<IHousesQuestions, HousesQuestions>();
             //services.AddTransient<IUser, User>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
             services.AddMvc();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -51,10 +58,15 @@ namespace SearchHoliday
             app.UseExceptionHandler("/Error");
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}");
+            });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute("default", "{controller=Account}/{action=Login}");
             });
         }
     }

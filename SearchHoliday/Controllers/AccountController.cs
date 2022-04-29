@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json;
 
 namespace SearchHoliday.Controllers
 {
@@ -26,7 +27,7 @@ namespace SearchHoliday.Controllers
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("UserPanel", "Account");
             return View();
         }
 
@@ -34,17 +35,20 @@ namespace SearchHoliday.Controllers
         public async Task<IActionResult> Login(LoginModel model)
         {
             if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("UserPanel", "Account");
             if (ModelState.IsValid)
             {
                 User user = await _db.Users.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
                 if (user != null)
                 {
-                    await Authenticate(model.Email);
-
-                    return RedirectToAction("Index", "Home");
+                    await Authenticate(model.Email, user.Role);
+                    return RedirectToAction("UserPanel", "Account");
+                } 
+                else
+                {
+                    Response.StatusCode = 400;
+                    return Json("Не верный email или пароль");
                 }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
             return View(model);
         }
@@ -54,7 +58,7 @@ namespace SearchHoliday.Controllers
         {
             
             if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("UserPanel", "Account");
             return View();
         }
 
@@ -62,30 +66,33 @@ namespace SearchHoliday.Controllers
         public async Task<IActionResult> Register(RegisterModel model)
         {
             if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("UserPanel", "Account");
             if (ModelState.IsValid)
             {
                 User user = await _db.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
                 if (user == null)
                 {
-                    _db.Users.Add(new User { Email = model.Email, Password = model.Password });
+                    _db.Users.Add(new User { Email = model.Email, Password = model.Password, Role = "user" });
                     await _db.SaveChangesAsync();
 
-                    await Authenticate(model.Email);
-
-                    return RedirectToAction("Index", "Home");
+                    await Authenticate(model.Email, "user");
+                    return RedirectToAction("UserPanel", "Account");
                 }
                 else
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                {
+                    Response.StatusCode = 400;
+                    return Json("Такой пользователь уже существует");
+                }
             }
             return View(model);
         }
 
-        private async Task Authenticate(string login)
+        private async Task Authenticate(string login, string role)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, login)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, login),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
             };
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
@@ -97,31 +104,11 @@ namespace SearchHoliday.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        /*[HttpPost]
-        public ActionResult Login(IFormCollection collection)
+        [Authorize]
+        [HttpGet]
+        public IActionResult UserPanel()
         {
-            try
-            {
-                StringValues email, password;
-                if (collection.TryGetValue("email", out email) && collection.TryGetValue("password", out password))
-                {
-                    var user = _db.Users.Where(u => u.Login == email.ToString() && u.Password == password.ToString());
-                    if (user.Count() != 0)
-                    {
-                        return RedirectToAction("Houses");
-                    }
-                    else
-                    {
-
-                        return View();
-                    }
-                }
-                return View();
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
+            return View();
+        }
     }
 }

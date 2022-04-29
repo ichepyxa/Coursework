@@ -75,6 +75,14 @@ body::-webkit-scrollbar-thumb {
     border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 
+.userNav img {
+    width: 32px;
+    height: 32px;
+    object-position: center;
+    object-fit: contain;
+    background: #ccc;
+}
+
 .userNav.userNav--mobile {
     display: none;
     justify-content: space-between;
@@ -203,6 +211,11 @@ a.main-inner__item-link:active ~ .main-inner__item-content {
 .form-signup > * {
     width: 100%;
     margin-bottom: 10px;
+}
+
+.form-signin input.is-invalid,
+.form-signup input.is-invalid {
+    border-color: var(--bs-danger);
 }
 
 

@@ -30,7 +30,7 @@ namespace SearchHoliday.Controllers
         /*[Route("home")]
         [Route("")]
         [Route("~/")]*/
-        public ActionResult Index()
+        public IActionResult Index()
         {
             RecomendedHousesListViewModel obj = new RecomendedHousesListViewModel();
             obj.AllRecomendedHouses = _allRecomendedHouses.GetHouses;
@@ -42,7 +42,7 @@ namespace SearchHoliday.Controllers
             return View(obj);
         }
 
-        public ActionResult Houses(int num = 1)
+        public IActionResult Houses(int num = 1)
         {
             HousesListViewModel obj = new HousesListViewModel();
             _allHouses.Url = "https://www.holiday.by/by/dom?p=" + num;
@@ -57,7 +57,7 @@ namespace SearchHoliday.Controllers
             return View(obj);
         }
 
-        public ActionResult Description(string url)
+        public IActionResult Description(string url)
         {
             HouseDescriptionViewModel obj = new HouseDescriptionViewModel();
             _houseDescription.Url = url;
@@ -89,10 +89,8 @@ namespace SearchHoliday.Controllers
         }
 
         [Authorize]
-        public ActionResult Test()
+        public IActionResult Test()
         {
-            Console.WriteLine(User.Identity.Name);
-            Console.WriteLine(User.Identity.AuthenticationType);
             HousesQuestionsViewModel obj = new HousesQuestionsViewModel();
             obj.HousesQuestions = 
             (
@@ -129,7 +127,7 @@ namespace SearchHoliday.Controllers
             return View(obj);
         }
 
-        public ActionResult Error()
+        public IActionResult Error()
         {
             return View();
         }

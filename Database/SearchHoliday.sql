@@ -30,7 +30,7 @@ insert into housesquestions (Title, Question, RightAnswer, TypeQuestion, IsError
 values ("Gdgdfs", "fgdgdfsfd", "23", 1, false),
        ("unijmkfd,l", "uoimok,gfldg", "23", 2, false);
        
-insert into users (Login, Password, Role)
+insert into users (Email, Password, Role)
 values ("admin@gmail.com", "123456", "admin"),
        ("user1@mail.com", "743895fdkmog", "user");
      
